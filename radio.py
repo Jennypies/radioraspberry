@@ -1,4 +1,5 @@
 import os
+import time
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -8,4 +9,4 @@ def toggle_callback():
     os.system("mpc toggle")
 
 GPIO.add_event_callback(4, toggle_callback)
-sleep(9999)
+time.sleep(9999)
