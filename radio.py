@@ -8,5 +8,7 @@ GPIO.add_event_detect(4, GPIO.RISING)
 def toggle_callback(channel):
     os.system("mpc toggle")
 
-GPIO.add_event_callback(4, toggle_callback)
-time.sleep(9999)
+GPIO.add_event_callback(4, toggle_callback, bouncetime=200)
+
+while True:
+    time.sleep(9999)
