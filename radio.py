@@ -1,14 +1,15 @@
 import os
 import time
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.add_event_detect(4, GPIO.RISING)
+import RPIO
 
-def toggle_callback(channel):
+def toggle(gpio_id, value):
     os.system("mpc toggle")
 
-GPIO.add_event_callback(4, toggle_callback, bouncetime=200)
+RPIO.add_interrupt_callback(4, toggle, edge='rising', pull_up_down=RPIO.PUD_OFF, threaded_callback=False, debounce_timeout_ms=200)
 
-while True:
-    time.sleep(9999)
+
+
+
+
+
+RPIO.wait_for_interrupts(threaded=True)
