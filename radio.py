@@ -23,7 +23,6 @@ def shutdown():
     os.system("poweroff -h")
 
 
-
 toggle_switch.when_pressed = toggle
 
 next_switch.when_pressed = next_station
