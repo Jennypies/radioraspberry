@@ -18,7 +18,7 @@ prev_switch = Button(27, pull_up=False, hold_time=1, hold_repeat=True,)
 def prev_station():
     os.system("mpc prev")
 
-shutdown_switch = Button(22)
+shutdown_switch = Button(22, pull_up=False,)
 
 def shutdown():
     check_call(['sudo', 'poweroff'])
@@ -33,6 +33,6 @@ next_switch.when_held = next_station
 prev_switch.when_pressed = prev_station
 prev_switch.when_held = prev_station
 
-shutdown_btn.when_held = shutdown
+shutdown_switch.when_held = shutdown
 
 pause()
