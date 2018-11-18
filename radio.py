@@ -3,7 +3,7 @@ from gpiozero import Button
 from signal import pause
 
 
-toggle_switch = Button(4, pull_up=False, bounce_time=1)
+toggle_switch = Button(4, pull_up=False)
 
 def toggle():
     os.system("mpc toggle")
