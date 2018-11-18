@@ -1,7 +1,6 @@
 import os
 from gpiozero import Button
 from signal import pause
-from subprocess import check_call
 
 toggle_switch = Button(4, pull_up=False)
 
@@ -21,7 +20,7 @@ def prev_station():
 shutdown_switch = Button(22, pull_up=False,)
 
 def shutdown():
-    check_call(['sudo', 'poweroff'])
+    os.system("poweroff -h")
 
 
 
