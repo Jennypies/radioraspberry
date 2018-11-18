@@ -1,15 +1,12 @@
 import os
-import time
-import RPIO
+from gppiozero import Button
+from signal import pause
 
-def toggle(gpio_id, value):
+toggle_switch = Button(4, *, pull_up=False, bounce_time=200, hold_time=2, hold_repeat=True, pin_factory=None)
+
+def toggle()):
     os.system("mpc toggle")
 
-RPIO.add_interrupt_callback(4, toggle, edge='rising', pull_up_down=RPIO.PUD_OFF, threaded_callback=False, debounce_timeout_ms=200)
+toggle_switch.when_pressed = toggle
 
-
-
-
-
-
-RPIO.wait_for_interrupts(threaded=True)
+pause()
