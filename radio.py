@@ -1,7 +1,7 @@
 import os
 from time import sleep
 from gpiozero import Button
-from gpiozero import LED
+from gpiozero import PWMLED
 from signal import pause
 
 toggle_switch = Button(4, pull_up=False)
@@ -21,31 +21,29 @@ def prev_station():
 
 shutdown_switch = Button(3, pull_up=True, hold_time=3, hold_repeat=False)
 
+prev_led = PWMLED(22)
+next_led = PWMLED(13)
+toggle_led = PWMLED(27)
+
+def startup_led():
+    toggle_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    sleep(0.3)
+    prev_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    sleep(0.3)
+    next_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    sleep(1.8)
+
+
+def shutdown_led():
+    pass
+
+
 def shutdown():
-    toggle_led.off()
-    prev_led.off()
-    next_led.off()
+    shutdown_led()
     os.system("poweroff -h")
 
-prev_led = LED(22)
-next_led = LED(13)
-toggle_led = LED(27)
 
-def startup():
-    for x in range (0, 1):
-        toggle_led.on()
-        sleep(0.3)
-        toggle_led.off()
-        prev_led.on()
-        sleep(0.3)
-        prev_led.off()
-        next_led.on()
-        sleep(0.3)
-        next_led.off()
-        sleep(0.6)
-    toggle_led.on()
-    prev_led.on()
-    next_led.on()
+
 
 toggle_switch.when_pressed = toggle
 next_switch.when_pressed = next_station
@@ -57,5 +55,9 @@ prev_switch.when_held = prev_station
 shutdown_switch.when_held = shutdown
 
 
-startup()
-pause()
+startup_led()
+
+try:
+    pause()
+finally:
+    shutdown_led()
