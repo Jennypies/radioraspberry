@@ -12,7 +12,7 @@ next_switch = Button(17, pull_up=False, hold_time=1, hold_repeat=True,)
 def next_station():
     os.system("mpc next")
 
-prev_switch = Button(27, pull_up=False, hold_time=1, hold_repeat=True,)
+prev_switch = Button(19, pull_up=False, hold_time=1, hold_repeat=True,)
 
 def prev_station():
     os.system("mpc prev")
