@@ -32,7 +32,7 @@ def startup_led():
         prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
         sleep(0.1)
         next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
-        sleep(0.8)
+        sleep(0.9)
 
 
 def shutdown_led():
