@@ -36,7 +36,7 @@ def startup_led():
     toggle_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
     prev_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
     next_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
-    sleep(0.5)
+    sleep(0.49)
     toggle_led.on()
     prev_led.on()
     next_led.on()
