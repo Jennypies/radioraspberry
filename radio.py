@@ -17,7 +17,7 @@ prev_switch = Button(19, pull_up=False, hold_time=1, hold_repeat=True,)
 def prev_station():
     os.system("mpc prev")
 
-shutdown_switch = Button(22, pull_up=False, hold_time=3, hold_repeat=True)
+shutdown_switch = Button(3, pull_up=True, hold_time=3, hold_repeat=False)
 
 def shutdown():
     os.system("poweroff -h")
