@@ -1,7 +1,7 @@
 import os
 from time import sleep
 from gpiozero import Button
-from gppiozero import LED
+from gpiozero import LED
 from signal import pause
 
 toggle_switch = Button(4, pull_up=False)
