@@ -26,11 +26,11 @@ next_led = PWMLED(13)
 toggle_led = PWMLED(27)
 
 def startup_led():
-    toggle_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    toggle_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=1, background=True)
     sleep(0.3)
-    prev_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    prev_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=1, background=True)
     sleep(0.3)
-    next_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=3, background=True)
+    next_led.pulse(fade_in_time=0.3, fade_out_time=0.3, n=1, background=True)
     sleep(1.8)
 
 
