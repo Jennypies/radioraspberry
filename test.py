@@ -7,7 +7,7 @@ prev_led = PWMLED(22)
 
 while True:
     subprocess.check_output(["mpc", "idle"])
-    if "paused" in subprocess.check_output(["mpc", "status"]):
+    if b"paused" in subprocess.check_output(["mpc", "status"]):
         toggle_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
         next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
         prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
