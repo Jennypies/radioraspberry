@@ -1,3 +1,4 @@
 import subprocess
 
-print(subprocess.check_output(["mpc", "idle"]))
+subprocess.check_output(["mpc", "idle"])
+print(subprocess.check_output(["mpc", "status"]))
