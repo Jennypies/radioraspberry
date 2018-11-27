@@ -1,3 +1,3 @@
 import subprocess
 
-print(subprocess.check_output("mpc status"))
+print(subprocess.check_output(["mpc", "status"]))
