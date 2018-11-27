@@ -1,0 +1,159 @@
+https://howchoo.com/g/mwnlytk3zmm/how-to-add-a-power-button-to-your-raspberry-pi
+
+mpc notes
+
+install
+sudo apt-get install mpd mpc
+
+save playlist:
+mpc save my_playlist
+
+edit playlist
+The playlist is saved in /var/lib/mpd/playlists/
+sudo nano /var/lib/mpd/playlists/my_playlist
+
+load playlist (after editing)
+mpc load /var/lib/mpd/playlists/my_playlist
+
+Play:
+mpc play 1  # Plays one of the loaded streams. First stream loaded above is number 1
+
+Volume:
+mpc volume 100 
+
+mpc ls
+lists all avaliable pplaylists
+
+mpc current = show the current song
+
+mpc playlist bbc_radio = list all songs from playlisty
+
+A Radio player which works with subpprocess and vlc
+
+import time
+import subprocess
+
+channels = [\
+        ("P1.wav", "http://live-icy.gss.dr.dk:8000/A/A03H.mp3.m3u"), \
+        ("P2.wav", "http://live-icy.gss.dr.dk:8000/A/A04H.mp3.m3u") \
+        ]
+
+def get_switch_value():
+        f = open("/sys/class/gpio/gpio0/value")
+        value = f.read()
+        f.close()
+
+        return value[0:1]
+
+def play_channel(idx):
+        global radio_process
+        if radio_process <> None:
+                radio_process.terminate()
+
+        channel_signature = channels[idx][0]
+        url = channels[idx][1]
+
+        subprocess.call(["/usr/bin/aplay", "/home/pi/" + channel_signature])
+        radio_process = subprocess.Popen(["/usr/bin/vlc", url, "-I", "dummy"])
+
+####
+
+radio_process = None
+channel_index = 0
+play_channel(channel_index)
+
+latest_switch_value = get_switch_value()
+
+try:
+        while True:
+                v = get_switch_value()
+                # Button pressed: Switch to next channel.
+                if v <> latest_switch_value:
+                        print "Button pressed."
+                        latest_switch_value = v
+
+                        channel_index = channel_index + 1
+                        if channel_index >= len(channels):
+                                channel_index = 0
+                        play_channel(channel_index)
+
+                # Poll interval.
+                time.sleep(0.1)
+except:
+        # Keyboard interrupt or other stuff that causes termination -
+        # clean up any running child process.
+        if radio_process <> None:
+                radio_process.terminate()
+
+
+
+radio URLS
+BBC Radio 1
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p
+
+BBC Radio 1xtra
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p
+
+BBC Radio 2
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p
+
+BBC Radio 3
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio3_mf_p
+
+BBC Radio 4FM
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p
+
+BBC Radio 4LW
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4lw_mf_p
+
+BBC Radio 4 Extra
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4extra_mf_p
+
+BBC Radio 5 Live
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p
+
+BBC Radio 5 Live Sportsball Extra
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5extra_mf_p
+
+BBC Radio 6 Music
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_6music_mf_p
+
+BBC Asian Network
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_asianet_mf_p
+
+BBC World Service UK stream
+
+http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk
+
+BBC World Service News stream
+
+http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-einws
+
+BBC Radio Cambridgeshire
+
+http://bbcmedia.ic.llnwd.net/stream/bbcmedia_lrcambs_mf_p
+
+http://streams.dancefm.net/stream/1/
+Dance
+
+http://ice3.somafm.com/dubstep-256-mp3
+Dubstep
+
+https://tunein.com/radio/music/
+
+
+
+
+Subprocess doc info
+https://docs.python.org/2/library/subprocess.html

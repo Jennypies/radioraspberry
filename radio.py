@@ -4,26 +4,27 @@ from gpiozero import Button
 from gpiozero import PWMLED
 from signal import pause
 
-toggle_switch = Button(4, pull_up=False)
+toggle_led = PWMLED(27)
+next_led = PWMLED(13)
+prev_led = PWMLED(22)
 
-def toggle(): 
+
+def toggle():
     os.system("mpc toggle")
 
-next_switch = Button(17, pull_up=False, hold_time=1, hold_repeat=True,)
 
 def next_station():
     os.system("mpc next")
 
-prev_switch = Button(19, pull_up=False, hold_time=1, hold_repeat=True,)
 
 def prev_station():
     os.system("mpc prev")
 
-shutdown_switch = Button(3, pull_up=True, hold_time=3, hold_repeat=False)
 
-prev_led = PWMLED(22)
-next_led = PWMLED(13)
-toggle_led = PWMLED(27)
+def shutdown():
+    shutdown_led()
+    os.system("poweroff -h")
+
 
 def startup_led():
     for _ in range(0, 2):
@@ -41,6 +42,7 @@ def startup_led():
     prev_led.on()
     next_led.on()
 
+
 def shutdown_led():
     toggle_led.pulse(fade_in_time=0, fade_out_time=0.5, n=1, background=True)
     prev_led.pulse(fade_in_time=0, fade_out_time=0.5, n=1, background=True)
@@ -50,26 +52,29 @@ def shutdown_led():
     prev_led.off()
     next_led.off()
 
-def shutdown():
-    shutdown_led()
-    os.system("poweroff -h")
 
-
-
-
+toggle_switch = Button(4, pull_up=False)
 toggle_switch.when_pressed = toggle
+
+next_switch = Button(17, pull_up=False, hold_time=1, hold_repeat=True)
 next_switch.when_pressed = next_station
 next_switch.when_held = next_station
 
+prev_switch = Button(19, pull_up=False, hold_time=1, hold_repeat=True)
 prev_switch.when_pressed = prev_station
 prev_switch.when_held = prev_station
 
+shutdown_switch = Button(3, pull_up=True, hold_time=3, hold_repeat=False)
 shutdown_switch.when_held = shutdown
 
 
-startup_led()
+def main():
+    startup_led()
+    try:
+        pause()
+    finally:
+        shutdown_led()
 
-try:
-    pause()
-finally:
-    shutdown_led()
+
+if __name__ == "__main__":
+    main()
