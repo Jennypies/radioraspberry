@@ -61,7 +61,7 @@ def main():
                 pause_led()
             else:
                 led_fade_on()
-            subprocess.check_status(["mpc", "idle"])
+            subprocess.check_call(["mpc", "idle"])
     finally:
         led_fade_off()
 
