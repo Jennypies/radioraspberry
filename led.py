@@ -70,4 +70,4 @@ if __name__ == "__main__":
     main()
 
 # subprocess notes- if you want return value use check output, if you just want to send
-# a command, use check status
+# a command, use check call
