@@ -30,14 +30,13 @@ def startup_led():
         sleep(0.1)
         next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
         sleep(1)
-        led_fade_on()
+    led_fade_on()
 
 
 def pause_led():
-    while b"paused" in subprocess.check_output(["mpc", "status"]):
-        toggle_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
-        next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
-        prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
+    toggle_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
+    next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
+    prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
 
 
 def led_fade_off():
@@ -57,10 +56,12 @@ def main():
         # While loop for main program
         while True:
             # check mpc status
-            if b"paused" in subprocess.check_output(["mpc", "status"]):
+            status = subprocess.check_output(["mpc", "status"])
+            if b"paused" in status:
                 pause_led()
-            elif b"play" in subprocess.check_output(["mpc", "status"]):
-                led_fade_on
+            else:
+                led_fade_on()
+            subprocess.check_output(["mpc", "idle"])
     finally:
         led_fade_off()
 
