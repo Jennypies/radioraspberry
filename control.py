@@ -4,19 +4,19 @@ from signal import pause
 
 
 def toggle():
-    subprocess.run("mpc", "toggle")
+    subprocess.check_status(["mpc", "toggle"])
 
 
 def next_station():
-    subprocess.run("mpc", "next")
+    subprocess.check_status(["mpc", "next"])
 
 
 def prev_station():
-    subprocess.run("mpc", "prev")
+    subprocess.check_status(["mpc", "prev"])
 
 
 def shutdown():
-    subprocess.run("poweroff", "-h")
+    subprocess.check_status(["poweroff", "-h"])
 
 
 toggle_switch = Button(4, pull_up=False)

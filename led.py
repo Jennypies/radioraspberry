@@ -61,10 +61,13 @@ def main():
                 pause_led()
             else:
                 led_fade_on()
-            subprocess.check_output(["mpc", "idle"])
+            subprocess.check_status(["mpc", "idle"])
     finally:
         led_fade_off()
 
 
 if __name__ == "__main__":
     main()
+
+# subprocess notes- if you want return value use check output, if you just want to send
+# a command, use check status
