@@ -2,6 +2,7 @@ import subprocess
 from gpiozero import Button
 from signal import pause
 
+
 def toggle():
     subprocess.run("mpc", "toggle")
 
@@ -15,7 +16,6 @@ def prev_station():
 
 
 def shutdown():
-    shutdown_led()
     subprocess.run("poweroff", "-h")
 
 
@@ -33,8 +33,10 @@ prev_switch.when_held = prev_station
 shutdown_switch = Button(3, pull_up=True, hold_time=3, hold_repeat=False)
 shutdown_switch.when_held = shutdown
 
+
 def main():
-        pause()
+    pause()
+
 
 if __name__ == "__main__":
     main()
