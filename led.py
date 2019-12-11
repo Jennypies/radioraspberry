@@ -1,48 +1,42 @@
 import subprocess
-from gpiozero import PWMLED
+from gpiozero import LED
 from time import sleep
 
 # set up LED GPIO pins
 
 
-toggle_led = PWMLED(27)
-next_led = PWMLED(13)
-prev_led = PWMLED(22)
-
-# LED animations
-
-
-def led_fade_on():
-    toggle_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
-    prev_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
-    next_led.pulse(fade_in_time=0.5, fade_out_time=0, n=1, background=True)
-    sleep(0.4)
-    toggle_led.on()
-    prev_led.on()
-    next_led.on()
+toggle_led = LED(27)
+next_led = LED(13)
+prev_led = LED(22)
 
 
 def startup_led():
-    for _ in range(0, 2):
-        toggle_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
-        sleep(0.1)
-        prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
-        sleep(0.1)
-        next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=1, background=True)
+    for x in range(2):
+        toggle_led.on()
+        next_led.on()
+        prev_led.on()
         sleep(1)
+        toggle_led.off()
+        next_led.off()
+        prev_led.off()
+        sleep(1)
+    toggle_led.on()
+    next_led.on()
+    prev_led.on()
 
 
 def pause_led():
-    toggle_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
-    next_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
-    prev_led.pulse(fade_in_time=0.5, fade_out_time=0.5, n=None, background=True)
+        toggle_led.on()
+        next_led.on()
+        prev_led.on()
+        sleep(1)
+        toggle_led.off()
+        next_led.off()
+        prev_led.off()
+        sleep(1)
 
 
 def led_fade_off():
-    toggle_led.pulse(fade_in_time=0, fade_out_time=0.5, n=1, background=True)
-    prev_led.pulse(fade_in_time=0, fade_out_time=0.5, n=1, background=True)
-    next_led.pulse(fade_in_time=0, fade_out_time=0.5, n=1, background=True)
-    sleep(0.4)
     toggle_led.off()
     prev_led.off()
     next_led.off()
@@ -59,7 +53,9 @@ def main():
             if b"paused" in status:
                 pause_led()
             else:
-                led_fade_on()
+                toggle_led.on()
+                next_led.on()
+                prev_led.on()
             subprocess.check_call(["mpc", "idle"])
     finally:
         led_fade_off()
